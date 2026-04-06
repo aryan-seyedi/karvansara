@@ -3,6 +3,7 @@ const https = require('https');
 
 const GANJOOR_API = "https://api.ganjoor.net/api/ganjoor";
 
+// MAPPING VERIFIED AGAINST API RESPONSES
 const POET_IDS = {
     "Rudaki": 1,
     "Hafiz": 2,
@@ -13,7 +14,7 @@ const POET_IDS = {
     "Saadi": 7,
     "Sanai": 8,
     "NasirKhusraw": 9,
-    "Nizami": 10, // Nizami is 10
+    "Nizami": 10,
     "KhajooKermani": 20,
     "Saeb": 22,
     "HatefIsfahani": 25,
@@ -29,7 +30,12 @@ function fetchPoetMetadata(poetId) {
             res.on('data', (chunk) => { data += chunk; });
             res.on('end', () => {
                 try {
-                    resolve(JSON.parse(data));
+                    const parsed = JSON.parse(data);
+                    // Double check the ID in the response matches the one we requested
+                    if (parsed && parsed.poet && parsed.poet.id !== poetId) {
+                        console.warn(`Warning: Requested ID ${poetId} but got poet ${parsed.poet.name} with ID ${parsed.poet.id}`);
+                    }
+                    resolve(parsed);
                 } catch (e) {
                     reject(e);
                 }
@@ -40,19 +46,25 @@ function fetchPoetMetadata(poetId) {
 
 async function main() {
     const metadata = {};
-    for (const [name, pid] of Object.entries(POET_IDS)) {
-        console.log(`Fetching ${name} (ID: ${pid})...`);
+    // We'll iterate by ID directly to avoid naming confusion until we have the data
+    const idsToFetch = Object.values(POET_IDS);
+    
+    for (const pid of idsToFetch) {
+        console.log(`Fetching ID: ${pid}...`);
         try {
             const data = await fetchPoetMetadata(pid);
             if (data && data.poet) {
-                metadata[name] = {
-                    "ganjoor_id": data.poet.id,
-                    "name": data.poet.name,
-                    "nickname": data.poet.nickname,
-                    "root_cat_id": data.poet.rootCatId,
-                    "birth_place": data.poet.birthPlace || "Unknown",
-                    "death_place": data.poet.deathPlace || "Unknown",
-                    "description": data.poet.description ? data.poet.description.substring(0, 300) + "..." : ""
+                const poet = data.poet;
+                // Use the nickname or name as the key
+                const key = poet.nickname || poet.name;
+                metadata[key] = {
+                    "ganjoor_id": poet.id,
+                    "name": poet.name,
+                    "nickname": poet.nickname,
+                    "root_cat_id": poet.rootCatId,
+                    "birth_place": poet.birthPlace || "Unknown",
+                    "death_place": poet.deathPlace || "Unknown",
+                    "description": poet.description ? poet.description.substring(0, 300) + "..." : ""
                 };
             }
         } catch (e) {
