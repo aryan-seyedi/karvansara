@@ -1,0 +1,34 @@
+{
+  "Saadi": {
+    "ganjoor_id": 7,
+    "name": "سعدی شیرازی",
+    "nickname": "سعدی",
+    "root_cat_id": 118,
+    "birth_place": "شیراز",
+    "death_place": "شیراز"
+  },
+  "Nizami": {
+    "ganjoor_id": 22,
+    "name": "صائب",
+    "nickname": "صائب",
+    "root_cat_id": 279,
+    "birth_place": "اصفهان",
+    "death_place": "Unknown"
+  },
+  "Rumi": {
+    "ganjoor_id": 5,
+    "name": "جلال الدین محمد مولوی",
+    "nickname": "مولانا",
+    "root_cat_id": 97,
+    "birth_place": "بلخ",
+    "death_place": "Unknown"
+  },
+  "Hafiz": {
+    "ganjoor_id": 2,
+    "name": "حافظ شیرازی",
+    "nickname": "حافظ",
+    "root_cat_id": 9,
+    "birth_place": "شیراز",
+    "death_place": "شیراز"
+  }
+}
