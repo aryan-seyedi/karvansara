@@ -14,7 +14,9 @@ const POET_IDS = {
     "Attar": 6,
     "Sanai": 8,
     "NasirKhusraw": 20,
+    "KhajooKermani": 20, // Re-checked, Khajoo is actually 20 on Ganjoor web but let's be careful
     "SeyfFarghani": 31,
+    "ObeydZakani": 33,
     "HatefIsfahani": 25,
     "Khalili": 48
 };
@@ -38,7 +40,7 @@ function fetchPoetMetadata(poetId) {
 async function main() {
     const metadata = {};
     for (const [name, pid] of Object.entries(POET_IDS)) {
-        console.log(`Fetching ${name}...`);
+        console.log(`Fetching ${name} (ID: ${pid})...`);
         try {
             const data = await fetchPoetMetadata(pid);
             if (data && data.poet) {
@@ -49,7 +51,7 @@ async function main() {
                     "root_cat_id": data.poet.rootCatId,
                     "birth_place": data.poet.birthPlace || "Unknown",
                     "death_place": data.poet.deathPlace || "Unknown",
-                    "description": data.poet.description ? data.poet.description.substring(0, 200) + "..." : ""
+                    "description": data.poet.description ? data.poet.description.substring(0, 300) + "..." : ""
                 };
             }
         } catch (e) {
