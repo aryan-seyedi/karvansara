@@ -8,7 +8,15 @@ const POET_IDS = {
     "Saadi": 7,
     "Nizami": 22,
     "Rumi": 5,
-    "Hafiz": 2
+    "Hafiz": 2,
+    "Ferdowsi": 3,
+    "Khayyam": 4,
+    "Attar": 6,
+    "Sanai": 8,
+    "NasirKhusraw": 20,
+    "SeyfFarghani": 31,
+    "HatefIsfahani": 25,
+    "Khalili": 48
 };
 
 function fetchPoetMetadata(poetId) {
@@ -40,7 +48,8 @@ async function main() {
                     "nickname": data.poet.nickname,
                     "root_cat_id": data.poet.rootCatId,
                     "birth_place": data.poet.birthPlace || "Unknown",
-                    "death_place": data.poet.deathPlace || "Unknown"
+                    "death_place": data.poet.deathPlace || "Unknown",
+                    "description": data.poet.description ? data.poet.description.substring(0, 200) + "..." : ""
                 };
             }
         } catch (e) {
