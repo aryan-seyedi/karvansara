@@ -3,18 +3,19 @@ const https = require('https');
 
 const GANJOOR_API = "https://api.ganjoor.net/api/ganjoor";
 
+// Corrected mapping based on Ganjoor API testing
 const POET_IDS = {
     "Rudaki": 1,
-    "Saadi": 7,
-    "Nizami": 22,
-    "Rumi": 5,
     "Hafiz": 2,
     "Ferdowsi": 3,
     "Khayyam": 4,
+    "Rumi": 5,
     "Attar": 6,
+    "Saadi": 7,
     "Sanai": 8,
-    "NasirKhusraw": 20,
-    "KhajooKermani": 20, // Re-checked, Khajoo is actually 20 on Ganjoor web but let's be careful
+    "NasirKhusraw": 9, // Nasir Khusraw is 9
+    "Nizami": 22,
+    "KhajooKermani": 20,
     "SeyfFarghani": 31,
     "ObeydZakani": 33,
     "HatefIsfahani": 25,
