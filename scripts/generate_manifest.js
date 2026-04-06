@@ -3,7 +3,6 @@ const https = require('https');
 
 const GANJOOR_API = "https://api.ganjoor.net/api/ganjoor";
 
-// Corrected mapping based on Ganjoor API testing
 const POET_IDS = {
     "Rudaki": 1,
     "Hafiz": 2,
@@ -13,12 +12,13 @@ const POET_IDS = {
     "Attar": 6,
     "Saadi": 7,
     "Sanai": 8,
-    "NasirKhusraw": 9, // Nasir Khusraw is 9
-    "Nizami": 22,
+    "NasirKhusraw": 9,
+    "Nizami": 10, // Nizami is 10
     "KhajooKermani": 20,
+    "Saeb": 22,
+    "HatefIsfahani": 25,
     "SeyfFarghani": 31,
     "ObeydZakani": 33,
-    "HatefIsfahani": 25,
     "Khalili": 48
 };
 
