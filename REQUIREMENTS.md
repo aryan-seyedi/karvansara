@@ -7,27 +7,18 @@ This document serves as the official source of truth for the Phase 1 Minimum Via
 - [x] **Identity & Branding**: Define "Karvansara" (Parsi/Turkic focus) and Anar (Pomegranate) motif.
 - [x] **Next.js Frontend**: Initialize a clean Next.js 14+ app (App Router) with Tailwind CSS.
 - [x] **Vercel Deployment**: Link the GitHub repo to Vercel for automated CI/CD. (Framework set to Next.js)
-- [ ] **Supabase Integration**: Connect the remote database and push the initial schema. (Authentication Error: Checking Password)
+- [x] **Supabase Integration**: Connected via `supabase-js` and tables seeded with 21 poets.
 
 ## 2. Data Engine (The Library)
-- [x] **Poet Manifest**: Identify and map 20+ Silk Road poets with Ganjoor IDs.
-- [ ] **Ingestion Pipeline**: Finalize a script that scrapes 1,000 top poems and pushes them to Supabase.
-- [ ] **Search Engine**: Implement a basic search in the UI that queries Supabase for poets/poems.
+- [x] **Poet Manifest**: Curate list of 21 initial poets (Hafez, Ferdowsi, etc.).
+- [x] **Database Schema**: Tables for `poets`, `works`, and `verses` applied.
+- [ ] **Ganjoor Ingestion**: Finalize script to fetch and push 1,000 top poems.
+- [ ] **Search Engine**: Basic list implemented; needs full-text search.
 
-## 3. Linguistic & Cultural Alignment
-- [ ] **Parsi-First UI**: Ensure the interface uses Parsi/Turkic-friendly fonts (e.g., Vazirmatn or IranSans).
-- [ ] **Terminology Audit**: Review UI text to minimize Arabic-derived terms in navigation/labels.
-- [ ] **Cultural Tidbits**: Create 3 high-SEO pages for Norooz, Yalda, and the Silk Road history.
+## 3. Cultural Content
+- [ ] **Heritage Pages**: Norooz, Yalda, and Silk Road history sections.
+- [ ] **Branding Assets**: Integrate Anar (Pomegranate) icons and Parsi typography.
 
-## 4. Verification & Health
-- [ ] **Connection Dashboard**: A hidden `/api/health` or `/debug` page to verify Supabase/Vercel status.
-- [ ] **RLS Security**: Verify that Row Level Security (RLS) is active so users can only *read* the library.
-
-## 5. Success Metrics for MVP
-1.  User can visit `karvansara.org` (or `.vercel.app`).
-2.  User can see a list of 20+ poets.
-3.  User can read at least one full work (e.g., *The Shahnameh* or *Divan-e-Hafiz*) retrieved from Supabase.
-4.  The page loads in < 2 seconds.
-
----
-*Signed: ASHA (Autonomous System Helping Aryan)*
+## 4. Governance & Safety
+- [ ] **RLS Policies**: Verify Row Level Security for public read-only access.
+- [x] **Credential Management**: `credentials.md` configured in host environment.
