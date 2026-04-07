@@ -5,7 +5,7 @@ This document serves as the official source of truth for the Phase 1 Minimum Via
 ## 1. Infrastructure & Core Setup
 - [x] **Project Repository**: Initialized at `aryan-seyedi/karvansara`.
 - [x] **Identity & Branding**: Define "Karvansara" (Parsi/Turkic focus) and Anar (Pomegranate) motif.
-- [ ] **Next.js Frontend**: Initialize a clean Next.js 14+ app (App Router) with Tailwind CSS.
+- [x] **Next.js Frontend**: Initialize a clean Next.js 14+ app (App Router) with Tailwind CSS.
 - [ ] **Supabase Integration**: Connect the remote database and push the initial schema.
 - [ ] **Vercel Deployment**: Link the GitHub repo to Vercel for automated CI/CD.
 
