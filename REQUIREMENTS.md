@@ -6,8 +6,8 @@ This document serves as the official source of truth for the Phase 1 Minimum Via
 - [x] **Project Repository**: Initialized at `aryan-seyedi/karvansara`.
 - [x] **Identity & Branding**: Define "Karvansara" (Parsi/Turkic focus) and Anar (Pomegranate) motif.
 - [x] **Next.js Frontend**: Initialize a clean Next.js 14+ app (App Router) with Tailwind CSS.
-- [ ] **Supabase Integration**: Connect the remote database and push the initial schema.
-- [ ] **Vercel Deployment**: Link the GitHub repo to Vercel for automated CI/CD.
+- [x] **Vercel Deployment**: Link the GitHub repo to Vercel for automated CI/CD. (Framework set to Next.js)
+- [ ] **Supabase Integration**: Connect the remote database and push the initial schema. (Authentication Error: Checking Password)
 
 ## 2. Data Engine (The Library)
 - [x] **Poet Manifest**: Identify and map 20+ Silk Road poets with Ganjoor IDs.
