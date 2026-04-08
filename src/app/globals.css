@@ -1,26 +1,53 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #fdfcf0;
+  --foreground: #1a1a1a;
+  --primary: #8b2635;
+  --secondary: #e5e0d0;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), sans-serif;
+}
+
+h1, h2, h3, h4, .font-playfair {
+  font-family: var(--font-playfair), serif;
+}
+
+/* Custom scrollbar to match our Anar/Parchment theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 38, 53, 0.1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 38, 53, 0.2);
+}
+
+/* Geometric Anar Synthesis Utils */
+.anar-grid {
+  background-image: radial-gradient(rgba(139, 38, 53, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.text-anar {
+  color: var(--primary);
+}
+
+.bg-anar {
+  background-color: var(--primary);
+}
+
+.border-anar {
+  border-color: var(--primary);
 }
