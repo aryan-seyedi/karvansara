@@ -1,11 +1,12 @@
 import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
+import DiscoverySection from '@/components/DiscoverySection';
 
 export default async function Home() {
   // Fetch a random verse for the "Discovery" section
   const { data: randomVerses } = await supabase
     .from('verses')
-    .select('*, works(title_fa, poets(name_fa))')
+    .select('*, works(title_fa, poets(name_fa, name_en))')
     .limit(1);
     
   const discoveryVerse = randomVerses?.[0];
@@ -32,30 +33,7 @@ export default async function Home() {
       </nav>
 
       {/* Hero / Discovery Section */}
-      <section className="max-w-4xl mx-auto py-20 px-6 text-center">
-        <div className="mb-6 inline-block px-3 py-1 bg-[#8B2635]/5 rounded-full text-[#8B2635] text-xs font-bold uppercase tracking-widest">
-          Discovery
-        </div>
-        <div className="mb-12">
-          {discoveryVerse ? (
-            <div className="space-y-6">
-              <p className="text-3xl md:text-4xl font-playfair italic leading-relaxed text-[#1A1A1A]">
-                {discoveryVerse.mesra1} <br /> {discoveryVerse.mesra2}
-              </p>
-              <p className="text-[#8B2635]/60 font-medium">
-                — {discoveryVerse.works?.poets?.name_fa}, {discoveryVerse.works?.title_fa}
-              </p>
-            </div>
-          ) : (
-            <p className="text-2xl font-playfair italic text-[#8B2635]/40">
-              "Every path has its rest, every traveler has a story."
-            </p>
-          )}
-        </div>
-        <h1 className="text-xl font-medium text-[#1A1A1A]/40 italic">
-          Where the Path Rests and Ideas Journey On
-        </h1>
-      </section>
+      <DiscoverySection discoveryVerse={discoveryVerse} />
 
       {/* Library Grid */}
       <section className="max-w-6xl mx-auto px-6 pb-32">
