@@ -1,6 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import Image from 'next/image';
 import DiscoverySection from '@/components/DiscoverySection';
+import Link from 'next/link';
 
 export default async function Home() {
   // Fetch a random verse for the "Discovery" section
@@ -20,15 +21,27 @@ export default async function Home() {
   return (
     <main className="min-h-screen bg-[#FDFCF0] text-[#1A1A1A] font-sans">
       {/* Navigation / Header */}
-      <nav className="max-w-6xl mx-auto px-6 py-8 flex justify-between items-center border-b border-[#8B2635]/10">
+      <nav className="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center border-b border-[#8B2635]/10 gap-6">
         <div className="flex items-center gap-3">
-          <Image src="/logo.png" alt="Karvansara Logo" width={40} height={40} className="object-contain" />
-          <span className="text-2xl font-bold tracking-tighter text-[#8B2635] font-playfair">Karvansara</span>
+          <Link href="/" className="flex items-center gap-3">
+            <Image src="/logo.png" alt="Karvansara Logo" width={50} height={50} className="object-contain" />
+            <span className="text-2xl font-bold tracking-tighter text-[#8B2635] font-playfair">Karvansara</span>
+          </Link>
         </div>
-        <div className="hidden md:flex gap-8 text-sm font-medium uppercase tracking-widest text-[#8B2635]/60">
-          <a href="#" className="hover:text-[#8B2635] transition-colors">Library</a>
-          <a href="#" className="hover:text-[#8B2635] transition-colors">History</a>
-          <a href="#" className="hover:text-[#8B2635] transition-colors">About</a>
+        
+        <div className="flex items-center gap-8">
+          <div className="flex gap-8 text-sm font-medium uppercase tracking-widest text-[#8B2635]/60">
+            <Link href="/" className="hover:text-[#8B2635] transition-colors border-b-2 border-[#8B2635]">Library</Link>
+            <Link href="/history" className="hover:text-[#8B2635] transition-colors">History</Link>
+            <Link href="/about" className="hover:text-[#8B2635] transition-colors">About</Link>
+          </div>
+          
+          {/* Language Toggle */}
+          <div className="flex items-center gap-2 px-3 py-1 bg-white border border-[#8B2635]/10 rounded-full shadow-sm">
+            <button className="text-[10px] font-bold text-[#8B2635] px-2 py-0.5 bg-[#FDFCF0] rounded-full shadow-inner">EN</button>
+            <div className="w-px h-3 bg-[#8B2635]/10" />
+            <button className="text-[10px] font-bold text-[#8B2635]/40 hover:text-[#8B2635] px-2 py-0.5 transition-colors">FA</button>
+          </div>
         </div>
       </nav>
 
@@ -74,9 +87,9 @@ export default async function Home() {
                   <span className="text-[10px] font-bold text-[#8B2635]/30 uppercase tracking-widest">
                     {poet.region || "Silk Road"}
                   </span>
-                  <button className="text-xs font-bold text-[#8B2635] hover:underline underline-offset-4">
+                  <Link href={`/poet/${poet.id}`} className="text-xs font-bold text-[#8B2635] hover:underline underline-offset-4">
                     Enter Room →
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -91,11 +104,11 @@ export default async function Home() {
             <Image src="/logo.png" alt="Karvansara Logo" width={30} height={30} className="grayscale" />
             <span className="text-sm font-bold tracking-widest text-[#1A1A1A] uppercase">Karvansara</span>
           </div>
-          <div className="text-[10px] font-bold text-[#8B2635]/40 uppercase tracking-[0.2em]">
+          <div className="text-[10px] font-bold text-[#8B2635]/40 uppercase tracking-[0.2em] text-center md:text-left">
             Where the Path Rests and Ideas Journey On
           </div>
           <div className="text-[10px] font-mono text-[#1A1A1A]/30">
-            © 2026 OUTPOST ONE
+            © 2026 <a href="https://www.farlish.ca/" target="_blank" rel="noopener noreferrer" className="hover:text-[#8B2635] underline decoration-dotted">Farlish Inc</a>
           </div>
         </div>
       </footer>
