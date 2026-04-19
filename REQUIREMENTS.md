@@ -2,8 +2,8 @@
 
 ## Phase 1: Infrastructure & Data Foundation
 1. **[X] Branding Update**: Update logo, favicon, and site metadata. (Completed)
-2. **SQL Schema Refinement**: Finalize tables for `poets`, `works`, `verses`, and `cultural_events` to support bilingual content and relational mapping.
-3. **GitHub Actions Sync**: Setup workflow to sync local `seed.sql` to Supabase for reliable environment parity.
+2. **[X] SQL Schema Refinement**: Finalize tables for `poets`, `works`, `verses`, and `cultural_events`. (Completed)
+3. **[X] GitHub Actions Sync**: Setup workflow to sync local `schema.sql` to Supabase. (Completed)
 4. **Poet Priority List**: Manually curate metadata for Saadi, Hafiz, Rumi, Nizami, and Rudaki.
 5. **Data Ingestion Script**: Implement a formatter/scraper to populate the database with works from the priority list (ensuring no source mentions in commits).
 
