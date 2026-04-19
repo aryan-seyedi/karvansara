@@ -4,7 +4,7 @@
 1. **[X] Branding Update**: Update logo, favicon, and site metadata. (Completed)
 2. **[X] SQL Schema Refinement**: Finalize tables for `poets`, `works`, `verses`, and `cultural_events`. (Completed)
 3. **[X] GitHub Actions Sync**: Setup workflow to sync local `schema.sql` to Supabase. (Completed)
-4. **Poet Priority List**: Manually curate metadata for Saadi, Hafiz, Rumi, Nizami, and Rudaki.
+4. **[X] Poet Priority List**: Manually curate metadata for Saadi, Hafiz, Rumi, Nizami, and Rudaki. (Completed)
 5. **Data Ingestion Script**: Implement a formatter/scraper to populate the database with works from the priority list (ensuring no source mentions in commits).
 
 ## Phase 2: Feature Implementation
