@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 
 export const metadata: Metadata = {
-  title: "Journey On",
+  title: "Karvansara",
   description: "Where the Path Rests and Ideas Journey On - A Silk Road Digital Library.",
   icons: {
     icon: "/favicon.png",

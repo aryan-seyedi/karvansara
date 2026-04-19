@@ -24,7 +24,7 @@ export default async function Home() {
       <nav className="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center border-b border-[#8B2635]/10 gap-6">
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3">
-            <Image src="/logo.png" alt="Karvansara Logo" width={50} height={50} className="object-contain" />
+            <Image src="/logo.png" alt="Karvansara Logo" width={80} height={80} className="object-contain" />
             <span className="text-2xl font-bold tracking-tighter text-[#8B2635] font-playfair">Karvansara</span>
           </Link>
         </div>
@@ -101,7 +101,7 @@ export default async function Home() {
       <footer className="bg-white border-t border-[#8B2635]/10 py-16">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-3 opacity-50">
-            <Image src="/logo.png" alt="Karvansara Logo" width={30} height={30} className="grayscale" />
+            <Image src="/logo.png" alt="Karvansara Logo" width={50} height={50} className="grayscale" />
             <span className="text-sm font-bold tracking-widest text-[#1A1A1A] uppercase">Karvansara</span>
           </div>
           <div className="text-[10px] font-bold text-[#8B2635]/40 uppercase tracking-[0.2em] text-center md:text-left">
