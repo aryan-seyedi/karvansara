@@ -1,29 +1,20 @@
-# Karvansara.org (کاروانسرا) - MVP Requirements & Tracking
+# Karvansara Development Roadmap
 
-This document serves as the official source of truth for the Phase 1 Minimum Viable Product (MVP). Progress is tracked by ASHA (@asha_da_bot).
+## Phase 1: Infrastructure & Data Foundation
+1. **[X] Branding Update**: Update logo, favicon, and site metadata. (Completed)
+2. **SQL Schema Refinement**: Finalize tables for `poets`, `works`, `verses`, and `cultural_events` to support bilingual content and relational mapping.
+3. **GitHub Actions Sync**: Setup workflow to sync local `seed.sql` to Supabase for reliable environment parity.
+4. **Poet Priority List**: Manually curate metadata for Saadi, Hafiz, Rumi, Nizami, and Rudaki.
+5. **Data Ingestion Script**: Implement a formatter/scraper to populate the database with works from the priority list (ensuring no source mentions in commits).
 
-## 1. Infrastructure & Core Setup
-- [x] **Project Repository**: Initialized at `aryan-seyedi/karvansara`.
-- [x] **Identity & Branding**: Define "Karvansara" (Parsi/Turkic focus) and Anar (Pomegranate) motif.
-- [x] **Next.js Frontend**: Initialize a clean Next.js 14+ app (App Router) with Tailwind CSS.
-- [x] **Vercel Deployment**: Link the GitHub repo to Vercel for automated CI/CD. (Framework set to Next.js)
-- [x] **Supabase Integration**: Connected via `supabase-js` and tables seeded with 21 poets.
-- [x] **Branding Update**: Set to "Journey On" (Tab title) and moto "Where the Path Rests and Ideas Journey On".
-- [x] **Logo & Favicon**: Implemented using the provided Anar (Pomegranate) design.
+## Phase 2: Feature Implementation
+6. **Hafiz Picker Logic**: Build the randomization engine and SEO-friendly verse display pages.
+7. **Bilingual Toggle Logic**: Connect the existing UI toggle to the data layer to switch between English and Farsi content globally.
+8. **Dynamic Poet Pages**: Build the `/poet/[id]` template to display lists of works and individual verses.
 
-## 2. Data Engine (The Library)
-- [x] **Poet Manifest**: Curate list of 21 initial poets (Hafez, Ferdowsi, etc.).
-- [x] **Database Schema**: Tables for `poets`, `works`, and `verses` applied.
-- [x] **DB Mapping**: Fixed column mismatch (`name_fa`/`name_en`).
-- [x] **Discovery Section**: Added to landing page with random verse fetch.
-- [ ] **Ganjoor Ingestion**: Finalize script to fetch and push 1,000 top poems.
-- [ ] **Contextual Meaning**: Add toggle next to each poem/phrase.
+## Phase 3: Content & Aesthetics
+9. **Foundational Articles**: Draft and implement pages for "Norooz" and "Yalda" exploring Parsi/Avestan roots.
+10. **UI/UX Polish**: Deepen the CSS system using Anar (Pomegranate) motifs and Parsi-Turkic geometric synthesis (borders, patterns, and icons).
 
-## 3. Architecture & Content
-- [ ] **Dynamic Routing**: Implement `/poet/[slug]` pages.
-- [ ] **Heritage Pages**: Norooz, Yalda, and Silk Road history sections.
-- [ ] **Parsi-Turkic Geometric Synthesis**: Refine UI with geometric grid patterns.
-
-## 4. Governance & Safety
-- [ ] **RLS Policies**: Verify Row Level Security for public read-only access.
-- [x] **Credential Management**: `credentials.md` configured in host environment.
+## Phase 4: Verification & SEO
+11. **Final Stack Audit**: Comprehensive check of security, performance, and SEO tags across all pages.
