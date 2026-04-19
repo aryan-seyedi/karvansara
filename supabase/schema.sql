@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS works (
     poet_id UUID REFERENCES poets(id) ON DELETE CASCADE,
     title_fa TEXT NOT NULL,
     title_en TEXT NOT NULL,
+    slug TEXT UNIQUE,
     description_fa TEXT,
     description_en TEXT,
     created_at TIMESTAMPTZ DEFAULT now()
@@ -29,8 +30,8 @@ CREATE TABLE IF NOT EXISTS works (
 CREATE TABLE IF NOT EXISTS verses (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     work_id UUID REFERENCES works(id) ON DELETE CASCADE,
-    mesra1 TEXT NOT NULL, -- First half of the verse
-    mesra2 TEXT NOT NULL, -- Second half of the verse
+    text_fa TEXT NOT NULL, -- Full Persian verse (usually two hemistichs)
+    text_en TEXT, -- Full English translation
     meaning_fa TEXT,
     meaning_en TEXT,
     order_index INTEGER, -- To maintain sequence in a poem
