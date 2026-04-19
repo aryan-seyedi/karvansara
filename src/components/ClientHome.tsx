@@ -26,7 +26,12 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
           .select('*, works(title_fa, title_en, poets(name_fa, name_en))')
           .limit(1);
         if (error) throw error;
-        if (data && data.length > 0) setDiscoveryVerse(data[0]);
+        if (data && data.length > 0) {
+        console.log('Discovery data:', data[0]);
+        setDiscoveryVerse(data[0]);
+      } else {
+        console.warn('No discovery data found');
+      }
       } catch (err) {
         console.error('Discovery fetch error:', err);
       }
