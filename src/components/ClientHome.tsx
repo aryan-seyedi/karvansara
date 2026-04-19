@@ -10,13 +10,26 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
   const { language, setLanguage, t } = useLanguage();
   const [discoveryVerse, setDiscoveryVerse] = useState<any>(null);
 
+  const otherPoets = [
+    { id: 'ferdowsi', name_en: 'Ferdowsi', name_fa: 'فردوسی', bio_en: 'Author of Shahnameh, the national epic of Greater Iran.', bio_fa: 'شاعر حماسه‌سرای ایرانی و سرایندهٔ شاهنامه', era_en: '10th Century', era: 'قرن چهارم', region_en: 'Khorasan', region: 'خراسان' },
+    { id: 'khayyam', name_en: 'Omar Khayyam', name_fa: 'خیام', bio_en: 'Polymath, mathematician, astronomer, and philosopher.', bio_fa: 'فیلسوف، ریاضی‌دان، ستاره‌شناس و رباعی‌سرای ایرانی', era_en: '11th Century', era: 'قرن پنجم', region_en: 'Nishapur', region: 'نیشابور' },
+    { id: 'attar', name_en: 'Attar of Nishapur', name_fa: 'عطار نیشابوری', bio_en: 'Theoretical spirit of Sufism and Persian poetry.', bio_fa: 'عارف، صوفی و شاعر بلندپایه ادبیات فارسی', era_en: '12th Century', era: 'قرن ششم', region_en: 'Nishapur', region: 'نیشابور' },
+    { id: 'nezami', name_en: 'Nizami Ganjavi', name_fa: 'نظامی گنجوی', bio_en: 'The greatest romantic epic poet in Persian literature.', bio_fa: 'بزرگ‌ترین داستان‌سرای منظوم حماسی مذهبی در ادبیات فارسی', era_en: '12th Century', era: 'قرن ششم', region_en: 'Ganja', region: 'گنجه' },
+    { id: 'sanai', name_en: 'Sanai', name_fa: 'سنایی', bio_en: 'The first to use the ghazal and qasida for Sufi philosophy.', bio_fa: 'از بزرگ‌ترین شاعران قصیده‌گو و عارفان تاریخ ادبیات فارسی', era_en: '11th Century', era: 'قرن پنجم', region_en: 'Ghazni', region: 'غزنی' },
+  ];
+
   useEffect(() => {
     async function fetchDiscovery() {
-      const { data } = await supabase
-        .from('verses')
-        .select('*, works(title_fa, title_en, poets(name_fa, name_en))')
-        .limit(1);
-      if (data) setDiscoveryVerse(data[0]);
+      try {
+        const { data, error } = await supabase
+          .from('verses')
+          .select('*, works(title_fa, title_en, poets(name_fa, name_en))')
+          .limit(1);
+        if (error) throw error;
+        if (data && data.length > 0) setDiscoveryVerse(data[0]);
+      } catch (err) {
+        console.error('Discovery fetch error:', err);
+      }
     }
     fetchDiscovery();
   }, []);
@@ -74,7 +87,7 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
                 <div className="flex items-center gap-4 text-[#8B2635]/60 font-medium">
                   <div className="w-8 h-px bg-[#8B2635]/20" />
                   <span className="text-sm italic font-playfair">
-                    {t(discoveryVerse.works.poets.name_en, discoveryVerse.works.poets.name_fa)} — {t(discoveryVerse.works.title_en, discoveryVerse.works.title_fa)}
+                    {t(discoveryVerse.works?.poets?.name_en || '', discoveryVerse.works?.poets?.name_fa || '')} — {t(discoveryVerse.works?.title_en || '', discoveryVerse.works?.title_fa || '')}
                   </span>
                 </div>
               </div>
@@ -105,6 +118,7 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Active Poets from DB */}
           {initialPoets.map((poet) => (
             <div 
               key={poet.id} 
@@ -131,6 +145,36 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
                 <Link href={`/poet/${poet.id}`} className="text-xs font-bold text-[#8B2635] hover:underline underline-offset-4">
                   {t('Enter Room →', 'ورود به تالار ←')}
                 </Link>
+              </div>
+            </div>
+          ))}
+
+          {/* Placeholder/Upcoming Poets */}
+          {otherPoets.map((poet) => (
+            <div 
+              key={poet.id} 
+              className="group relative bg-[#FDFCF0]/50 border border-[#8B2635]/5 p-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+            >
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h3 className="text-2xl font-bold font-playfair mb-1">
+                    {t(poet.name_en, poet.name_fa)}
+                  </h3>
+                  <p className="text-[10px] text-[#8B2635]/40 font-bold uppercase tracking-widest">
+                    {t(poet.era_en, poet.era)}
+                  </p>
+                </div>
+              </div>
+              <p className="text-[#1A1A1A]/70 leading-relaxed text-sm mb-8 line-clamp-3">
+                {t(poet.bio_en, poet.bio_fa)}
+              </p>
+              <div className="flex items-center justify-between mt-auto pt-6 border-t border-[#8B2635]/5">
+                <span className="text-[10px] font-bold text-[#8B2635]/30 uppercase tracking-widest">
+                  {t(poet.region_en, poet.region)}
+                </span>
+                <span className="text-[10px] font-bold text-[#8B2635]/20 uppercase">
+                  {t('Restoring Chamber...', 'در حال بازسازی...')}
+                </span>
               </div>
             </div>
           ))}
