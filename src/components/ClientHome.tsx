@@ -142,7 +142,7 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
                 <span className="text-[10px] font-bold text-[#8B2635]/30 uppercase tracking-widest">
                   {t(poet.region_en || poet.region, poet.region)}
                 </span>
-                <Link href={`/poet/${poet.id}`} className="text-xs font-bold text-[#8B2635] hover:underline underline-offset-4">
+                <Link href={`/poet/${poet.slug}`} className="text-xs font-bold text-[#8B2635] hover:underline underline-offset-4">
                   {t('Enter Room →', 'ورود به تالار ←')}
                 </Link>
               </div>
