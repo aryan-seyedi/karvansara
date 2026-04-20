@@ -23,7 +23,8 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
       try {
         const { data, error } = await supabase
           .from('verses')
-          .select('text_fa, text_en, works!inner(title_fa, title_en, poets!inner(name_fa, name_en))')
+          .select('mesra1, mesra2, works!inner(title_fa, title_en, poets!inner(name_fa, name_en))')
+          .order('created_at', { ascending: false })
           .limit(1);
         if (error) throw error;
         if (data && data.length > 0) setDiscoveryVerse(data[0]);
@@ -36,7 +37,6 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
 
   return (
     <main className="min-h-screen bg-[#FDFCF0] text-[#1A1A1A] font-sans">
-      {/* Navigation / Header */}
       <nav className="max-w-6xl mx-auto px-6 py-8 flex flex-col md:flex-row justify-between items-center border-b border-[#8B2635]/10 gap-6">
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-3">
@@ -52,22 +52,13 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
             <Link href="/about" className="hover:text-[#8B2635] transition-colors">{t('About', 'درباره')}</Link>
           </div>
           
-          {/* Language Toggle */}
           <div className="flex items-center gap-2 px-3 py-1 bg-white border border-[#8B2635]/10 rounded-full shadow-sm">
-            <button 
-              onClick={() => setLanguage('EN')}
-              className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-all ${language === 'EN' ? 'bg-[#FDFCF0] text-[#8B2635] shadow-inner' : 'text-[#8B2635]/40 hover:text-[#8B2635]'}`}
-            >EN</button>
-            <div className="w-px h-3 bg-[#8B2635]/10" />
-            <button 
-              onClick={() => setLanguage('FA')}
-              className={`text-[10px] font-bold px-2 py-0.5 rounded-full transition-all ${language === 'FA' ? 'bg-[#FDFCF0] text-[#8B2635] shadow-inner' : 'text-[#8B2635]/40 hover:text-[#8B2635]'}`}
-            >FA</button>
+            <button onClick={() => setLanguage('EN')} className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${language === 'EN' ? 'bg-[#FDFCF0] text-[#8B2635]' : 'text-[#8B2635]/40'}`}>EN</button>
+            <button onClick={() => setLanguage('FA')} className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${language === 'FA' ? 'bg-[#FDFCF0] text-[#8B2635]' : 'text-[#8B2635]/40'}`}>FA</button>
           </div>
         </div>
       </nav>
 
-      {/* Hero / Discovery Section */}
       <section className="max-w-6xl mx-auto px-6 py-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           <div className="lg:col-span-7">
@@ -81,9 +72,14 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
             
             {discoveryVerse ? (
               <div className="relative">
-                <p className={`text-4xl md:text-5xl lg:text-6xl font-playfair leading-tight mb-8 ${language === 'FA' ? 'leading-loose' : ''}`}>
-                  {t(discoveryVerse.text_en || discoveryVerse.text_fa, discoveryVerse.text_fa)}
+                <p className={`text-4xl md:text-5xl lg:text-6xl font-playfair leading-tight mb-4 ${language === 'FA' ? 'leading-loose' : ''}`}>
+                  {discoveryVerse.mesra1}
                 </p>
+                {discoveryVerse.mesra2 && (
+                  <p className={`text-4xl md:text-5xl lg:text-6xl font-playfair leading-tight mb-8 ${language === 'FA' ? 'leading-loose' : ''}`}>
+                    {discoveryVerse.mesra2}
+                  </p>
+                )}
                 <div className="flex items-center gap-4 text-[#8B2635]/60 font-medium">
                   <div className="w-8 h-px bg-[#8B2635]/20" />
                   <span className="text-sm italic font-playfair">
@@ -110,7 +106,6 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
         </div>
       </section>
 
-      {/* Library Grid */}
       <section className="max-w-6xl mx-auto px-6 pb-32">
         <div className="flex items-center gap-4 mb-12">
           <h2 className="text-2xl font-bold font-playfair">{t('The Library of Poets', 'کتابخانه شاعران')}</h2>
@@ -118,16 +113,12 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Active Poets from DB */}
           {initialPoets.map((poet) => (
-            <div 
-              key={poet.id} 
-              className="group relative bg-white border border-[#8B2635]/10 p-8 hover:border-[#8B2635] transition-all duration-500 shadow-sm hover:shadow-xl"
-            >
-              <div className="absolute top-0 left-0 w-1 h-0 bg-[#8B2635] group-hover:h-full transition-all duration-500" />
+            <div key={poet.id} className="group relative bg-white border border-[#8B2635]/10 p-8 hover:border-[#8B2635] transition-all shadow-sm hover:shadow-xl">
+              <div className="absolute top-0 left-0 w-1 h-0 bg-[#8B2635] group-hover:h-full transition-all" />
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <h3 className="text-2xl font-bold font-playfair mb-1 group-hover:text-[#8B2635] transition-colors">
+                  <h3 className="text-2xl font-bold font-playfair mb-1 group-hover:text-[#8B2635]">
                     {t(poet.name_en, poet.name_fa)}
                   </h3>
                   <p className="text-[10px] text-[#8B2635]/40 font-bold uppercase tracking-widest">
@@ -149,12 +140,8 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
             </div>
           ))}
 
-          {/* Placeholder/Upcoming Poets */}
           {otherPoets.map((poet) => (
-            <div 
-              key={poet.id} 
-              className="group relative bg-[#FDFCF0]/50 border border-[#8B2635]/5 p-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500"
-            >
+            <div key={poet.id} className="group relative bg-[#FDFCF0]/50 border border-[#8B2635]/5 p-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
               <div className="flex justify-between items-start mb-6">
                 <div>
                   <h3 className="text-2xl font-bold font-playfair mb-1">
@@ -181,7 +168,6 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-white border-t border-[#8B2635]/10 py-16">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-3 opacity-50">
@@ -192,7 +178,7 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
             {t('Where the Path Rests and Ideas Journey On', 'جایی که مسیر آرام می‌گیرد و اندیشه‌ها به سفر ادامه می‌دهند')}
           </div>
           <div className="text-[10px] font-mono text-[#1A1A1A]/30">
-            © 2026 <a href="https://www.farlish.ca/" target="_blank" rel="noopener noreferrer" className="hover:text-[#8B2635] underline decoration-dotted">Farlish Inc</a>
+            © 2026 <a href="https://www.farlish.ca/" target="_blank" rel="noopener noreferrer" className="hover:text-[#8B2635] underline">Farlish Inc</a>
           </div>
         </div>
       </footer>

@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 export default async function PoetPage({ params }: { params: { id: string } }) {
-  // Use slug for cleaner URLs (e.g., /poet/hafiz)
   const { data: poet } = await supabase
     .from('poets')
     .select('*, works(*, verses(*))')
@@ -15,7 +14,6 @@ export default async function PoetPage({ params }: { params: { id: string } }) {
 
   return (
     <main className="min-h-screen bg-[#FDFCF0] text-[#1A1A1A]">
-      {/* Header */}
       <nav className="max-w-6xl mx-auto px-6 py-8 flex justify-between items-center border-b border-[#8B2635]/10">
         <Link href="/" className="flex items-center gap-3">
           <Image src="/logo.png" alt="Logo" width={50} height={50} />
@@ -24,7 +22,6 @@ export default async function PoetPage({ params }: { params: { id: string } }) {
         <Link href="/" className="text-sm font-bold text-[#8B2635]/60 hover:text-[#8B2635]">BACK TO LIBRARY</Link>
       </nav>
 
-      {/* Poet Hero */}
       <section className="max-w-4xl mx-auto px-6 py-20 text-center">
         <h1 className="text-6xl font-playfair mb-6">{poet.name_en}</h1>
         <p className="text-xl text-[#8B2635]/60 font-playfair italic mb-8">{poet.name_fa}</p>
@@ -36,7 +33,6 @@ export default async function PoetPage({ params }: { params: { id: string } }) {
         <p className="text-lg leading-relaxed text-[#1A1A1A]/80 mb-16">{poet.bio_en}</p>
       </section>
 
-      {/* Works/Verses List */}
       <section className="max-w-4xl mx-auto px-6 pb-32">
         <div className="space-y-24">
           {poet.works?.map((work: any) => (
@@ -46,10 +42,12 @@ export default async function PoetPage({ params }: { params: { id: string } }) {
                 {work.title_en} / {work.title_fa}
               </h2>
               <div className="grid gap-12">
-                {work.verses?.map((verse: any) => (
+                {work.verses?.sort((a: any, b: any) => a.order_index - b.order_index).map((verse: any) => (
                   <div key={verse.id} className="group border-l border-[#8B2635]/10 pl-8 hover:border-[#8B2635] transition-colors">
-                    <p className="text-2xl font-playfair mb-4 leading-loose">{verse.text_fa}</p>
-                    <p className="text-[#1A1A1A]/60 italic font-playfair">{verse.text_en}</p>
+                    <div className="flex flex-col gap-2">
+                      <p className="text-2xl font-playfair leading-loose">{verse.mesra1}</p>
+                      {verse.mesra2 && <p className="text-2xl font-playfair leading-loose">{verse.mesra2}</p>}
+                    </div>
                   </div>
                 ))}
               </div>
