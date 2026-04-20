@@ -1,4 +1,4 @@
-const { createClient } = require('@supabase/supabase-js');
+import { createClient } from '@supabase/supabase-js';
 require('dotenv').config({ path: '.env.local' });
 
 const supabase = createClient(
@@ -6,11 +6,14 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-async function check() {
+async function checkColumns() {
   const { data, error } = await supabase.from('verses').select('*').limit(1);
-  console.log('Sample Data:', data);
-  console.log('Columns:', data && data[0] ? Object.keys(data[0]) : 'No data');
-  if (error) console.error('Error:', error);
+  if (data && data.length > 0) {
+    console.log('--- VERSES TABLE COLUMNS ---');
+    console.log(Object.keys(data[0]));
+  } else {
+    console.log('No data in verses table to check columns.');
+  }
 }
 
-check();
+checkColumns();
