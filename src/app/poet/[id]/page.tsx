@@ -7,30 +7,17 @@ export const dynamic = 'force-dynamic';
 
 export default async function PoetPage({ params }: { params: { id: string } }) {
   const { id } = params;
-  
-  // Clean up ID - sometimes it comes in with URL encoding
   const cleanId = decodeURIComponent(id).toLowerCase();
 
-  console.log('Rendering Poet Room for:', cleanId);
-
-  // 1. Fetch the poet first
-  const { data: poet, error: poetError } = await supabase
+  // Optimized Join Query
+  // Pulls poet + their works + the verses for those works in one go
+  const { data: poet, error } = await supabase
     .from('poets')
-    .select('*')
+    .select('*, works(*, verses(*))')
     .eq('slug', cleanId)
-    .maybeSingle();
+    .single();
 
-  if (!poet) {
-    console.error('Poet not found in DB for slug:', cleanId);
-    return notFound();
-  }
-
-  // 2. Fetch works and verses separately for better control
-  const { data: works } = await supabase
-    .from('works')
-    .select('*, verses(*)')
-    .eq('poet_id', poet.id)
-    .order('created_at', { ascending: true });
+  if (!poet || error) return notFound();
 
   return (
     <main className="min-h-screen bg-[#FDFCF0] text-[#1A1A1A] font-sans">
@@ -53,20 +40,16 @@ export default async function PoetPage({ params }: { params: { id: string } }) {
         </div>
         
         <div className="max-w-2xl mx-auto">
-          <p className="text-lg leading-relaxed text-[#1A1A1A]/70 italic">
-            {poet.bio_en}
-          </p>
+          <p className="text-lg leading-relaxed text-[#1A1A1A]/70 italic">{poet.bio_en}</p>
           <div className="mt-8 h-px w-24 bg-[#8B2635]/10 mx-auto" />
-          <p className="mt-8 text-lg leading-relaxed text-[#1A1A1A]/80 font-playfair" dir="rtl">
-            {poet.bio_fa}
-          </p>
+          <p className="mt-8 text-lg leading-relaxed text-[#1A1A1A]/80 font-playfair" dir="rtl">{poet.bio_fa}</p>
         </div>
       </section>
 
       <section className="max-w-4xl mx-auto px-6 pb-40">
         <div className="space-y-32">
-          {works?.map((work: any) => (
-            <div key={work.id} className="relative">
+          {poet.works?.map((work: any) => (
+            <div key={work.id}>
               <div className="sticky top-0 bg-[#FDFCF0]/90 backdrop-blur-sm py-4 z-10 border-b border-[#8B2635]/5 mb-16">
                 <h2 className="text-xs font-bold tracking-[0.4em] uppercase text-[#8B2635]/30 mb-2">Collection</h2>
                 <h3 className="text-3xl font-playfair text-[#1A1A1A]">{work.title_en} / <span dir="rtl">{work.title_fa}</span></h3>
@@ -74,20 +57,18 @@ export default async function PoetPage({ params }: { params: { id: string } }) {
 
               <div className="space-y-20">
                 {work.verses?.sort((a: any, b: any) => a.order_index - b.order_index).map((verse: any) => (
-                  <div key={verse.id} className="group">
-                    <div className="flex flex-col items-center text-center gap-6">
-                      <div className="space-y-2 text-[#1A1A1A] max-w-xl">
-                        <p className="text-2xl md:text-3xl font-playfair leading-[1.8]" dir="rtl">{verse.mesra1}</p>
-                        <p className="text-2xl md:text-3xl font-playfair leading-[1.8]" dir="rtl">{verse.mesra2}</p>
-                      </div>
-                      
-                      <div className="w-12 h-px bg-[#8B2635]/10 group-hover:w-24 transition-all duration-700" />
-                      
-                      {/* Placeholder for English translation until columns are added */}
-                      <p className="text-[#8B2635]/60 italic font-playfair max-w-lg leading-relaxed">
-                        The beauty of this verse awaits translation...
-                      </p>
-                    </div>
+                  <div key={verse.id} className="group flex flex-col items-center text-center gap-6">
+                    <p className="text-2xl md:text-3xl font-playfair leading-[1.8] whitespace-pre-wrap" dir="rtl">
+                      {verse.text_fa}
+                    </p>
+                    {verse.text_en && (
+                      <>
+                        <div className="w-12 h-px bg-[#8B2635]/10 group-hover:w-24 transition-all duration-700" />
+                        <p className="text-[#8B2635]/60 italic font-playfair max-w-lg leading-relaxed">
+                          {verse.text_en}
+                        </p>
+                      </>
+                    )}
                   </div>
                 ))}
               </div>
