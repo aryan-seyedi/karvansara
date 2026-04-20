@@ -72,14 +72,11 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
             
             {discoveryVerse ? (
               <div className="relative">
-                <p className={`text-4xl md:text-5xl lg:text-6xl font-playfair leading-tight mb-4 ${language === 'FA' ? 'leading-loose' : ''}`}>
-                  {discoveryVerse.mesra1}
-                </p>
-                {discoveryVerse.mesra2 && (
-                  <p className={`text-4xl md:text-5xl lg:text-6xl font-playfair leading-tight mb-8 ${language === 'FA' ? 'leading-loose' : ''}`}>
-                    {discoveryVerse.mesra2}
+                <div className={`mb-8 ${language === 'FA' ? 'text-right' : 'text-left'}`}>
+                  <p className={`text-3xl md:text-4xl font-playfair leading-tight mb-4 ${language === 'FA' ? 'leading-loose' : ''}`}>
+                    {t(discoveryVerse.text_en || discoveryVerse.mesra1 + ' ' + (discoveryVerse.mesra2 || ''), discoveryVerse.text_fa || discoveryVerse.mesra1 + ' ' + (discoveryVerse.mesra2 || ''))}
                   </p>
-                )}
+                </div>
                 <div className="flex items-center gap-4 text-[#8B2635]/60 font-medium">
                   <div className="w-8 h-px bg-[#8B2635]/20" />
                   <span className="text-sm italic font-playfair">
