@@ -11,11 +11,11 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
   const [discoveryVerse, setDiscoveryVerse] = useState<any>(null);
 
   const otherPoets = [
-    { id: 'ferdowsi', name_en: 'Ferdowsi', name_fa: 'فردوسی', bio_en: 'Author of Shahnameh, the national epic of Greater Iran.', bio_fa: 'شاعر حماسه‌سرای ایرانی و سرایندهٔ شاهنامه', era_en: '10th Century', era: 'قرن چهارم', region_en: 'Khorasan', region: 'خراسان' },
-    { id: 'khayyam', name_en: 'Omar Khayyam', name_fa: 'خیام', bio_en: 'Polymath, mathematician, astronomer, and philosopher.', bio_fa: 'فیلسوف، ریاضی‌دان، ستاره‌شناس و رباعی‌سرای ایرانی', era_en: '11th Century', era: 'قرن پنجم', region_en: 'Nishapur', region: 'نیشابور' },
-    { id: 'attar', name_en: 'Attar of Nishapur', name_fa: 'عطار نیشابوری', bio_en: 'Theoretical spirit of Sufism and Persian poetry.', bio_fa: 'عارف، صوفی و شاعر بلندپایه ادبیات فارسی', era_en: '12th Century', era: 'قرن ششم', region_en: 'Nishapur', region: 'نیشابور' },
-    { id: 'nezami', name_en: 'Nizami Ganjavi', name_fa: 'نظامی گنجوی', bio_en: 'The greatest romantic epic poet in Persian literature.', bio_fa: 'بزرگ‌ترین داستان‌سرای منظوم حماسی مذهبی در ادبیات فارسی', era_en: '12th Century', era: 'قرن ششم', region_en: 'Ganja', region: 'گنجه' },
-    { id: 'sanai', name_en: 'Sanai', name_fa: 'سنایی', bio_en: 'The first to use the ghazal and qasida for Sufi philosophy.', bio_fa: 'از بزرگ‌ترین شاعران قصیده‌گو و عارفان تاریخ ادبیات فارسی', era_en: '11th Century', era: 'قرن پنجم', region_en: 'Ghazni', region: 'غزنی' },
+    { id: 'ferdowsi', name_en: 'Ferdowsi', name_fa: 'فردوسی', bio_en: 'Author of Shahnameh, the national epic of Greater Iran.', bio_fa: 'شاعر حماسه‌سرای ایرانی و سرایندهٔ شاهنامه', era_en: '10th Century', era_fa: 'قرن چهارم', region_en: 'Khorasan', region_fa: 'خراسان' },
+    { id: 'khayyam', name_en: 'Omar Khayyam', name_fa: 'خیام', bio_en: 'Polymath, mathematician, astronomer, and philosopher.', bio_fa: 'فیلسوف، ریاضی‌دان، ستاره‌شناس و رباعی‌سرای ایرانی', era_en: '11th Century', era_fa: 'قرن پنجم', region_en: 'Nishapur', region_fa: 'نیشابور' },
+    { id: 'attar', name_en: 'Attar of Nishapur', name_fa: 'عطار نیشابوری', bio_en: 'Theoretical spirit of Sufism and Persian poetry.', bio_fa: 'عارف، صوفی و شاعر بلندپایه ادبیات فارسی', era_en: '12th Century', era_fa: 'قرن ششم', region_en: 'Nishapur', region_fa: 'نیشابور' },
+    { id: 'khwaju', name_en: 'Khwaju Kermani', name_fa: 'خواجوی کرمانی', bio_en: 'Famous poet and Sufi mystic from Kerman.', bio_fa: 'شاعر و عارف بزرگ سدهٔ هشتم هجری اهل کرمان', era_en: '14th Century', era_fa: 'قرن هشتم', region_en: 'Kerman', region_fa: 'کرمان' },
+    { id: 'sanai', name_en: 'Sanai', name_fa: 'سنایی', bio_en: 'The first to use the ghazal and qasida for Sufi philosophy.', bio_fa: 'از بزرگ‌ترین شاعران قصیده‌گو و عارفان تاریخ ادبیات فارسی', era_en: '11th Century', era_fa: 'قرن پنجم', region_en: 'Ghazni', region_fa: 'غزنی' },
   ];
 
   useEffect(() => {
@@ -23,15 +23,10 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
       try {
         const { data, error } = await supabase
           .from('verses')
-          .select('*, works(title_fa, title_en, poets(name_fa, name_en))')
+          .select('text_fa, text_en, works!inner(title_fa, title_en, poets!inner(name_fa, name_en))')
           .limit(1);
         if (error) throw error;
-        if (data && data.length > 0) {
-        console.log('Discovery data:', data[0]);
-        setDiscoveryVerse(data[0]);
-      } else {
-        console.warn('No discovery data found');
-      }
+        if (data && data.length > 0) setDiscoveryVerse(data[0]);
       } catch (err) {
         console.error('Discovery fetch error:', err);
       }
@@ -166,7 +161,7 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
                     {t(poet.name_en, poet.name_fa)}
                   </h3>
                   <p className="text-[10px] text-[#8B2635]/40 font-bold uppercase tracking-widest">
-                    {t(poet.era_en, poet.era)}
+                    {t(poet.era_en, poet.era_fa)}
                   </p>
                 </div>
               </div>
@@ -175,7 +170,7 @@ export default function ClientHome({ initialPoets }: { initialPoets: any[] }) {
               </p>
               <div className="flex items-center justify-between mt-auto pt-6 border-t border-[#8B2635]/5">
                 <span className="text-[10px] font-bold text-[#8B2635]/30 uppercase tracking-widest">
-                  {t(poet.region_en, poet.region)}
+                  {t(poet.region_en, poet.region_fa)}
                 </span>
                 <span className="text-[10px] font-bold text-[#8B2635]/20 uppercase">
                   {t('Restoring Chamber...', 'در حال بازسازی...')}
